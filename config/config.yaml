@@ -1,0 +1,85 @@
+# ==========================================
+# Windows AI Agent Configuration
+# ==========================================
+
+model:
+  ollama_model: "qwen2.5:1.5b"
+  max_tokens: 1024
+  temperature: 0.1
+  ollama_host: "http://localhost:11434"
+  request_timeout_seconds: 120
+
+voice:
+  # --- microphone / capture ---
+  device: 1                       # Explicitly bound to your Realtek Microphone Array
+  sample_rate: 16000
+  block_size: 1600                # frames per read chunk (1600 @16kHz = 0.1s)
+  min_audio_level: 0.0005         # Super sensitive pickup threshold
+  max_audio_level: 0.95           # clipping guard during recording
+  vad_filter: true
+  duration_seconds: 8.0           # Longer wait time for speech to start
+  max_record_seconds: 15.0        # hard cap on recording length
+  pre_speech_buffer: 0.4          # audio kept from BEFORE speech detection starts
+  post_speech_silence: 1.5        # silence after you stop talking before listen() finishes
+  mute_cooldown_seconds: 5.0      # ignore mic right after TTS speaks
+
+  # --- speech-to-text ---
+  whisper_model: "small"
+  language: "en"
+  beam_size: 5
+  min_transcription_confidence: -0.75
+  stt_device: "auto"              # "auto" | "cuda" | "cpu"
+
+  # --- text-to-speech ---
+  tts_enabled: true
+  rate: 175
+  volume: 1.0                     # 0.0 - 1.0
+  voice_name: ""                  # substring e.g. "Zira"; empty = default
+  suppress_duplicates_seconds: 10
+
+browser:
+  default_browser: "chrome"
+  navigation_timeout_seconds: 20
+  verify_navigation: true
+  youtube_autoplay_delay_seconds: 2.0
+
+limits:
+  ui_control_wait_timeout_seconds: 5
+  ui_max_retries: 2
+  command_timeout_seconds: 10
+  ui_verify_delay_seconds: 0.4
+  max_list_controls_entries: 100
+
+safety:
+  require_confirmation_for_dangerous_actions: true
+  require_confirmation_for_modifications: false
+  max_actions_per_minute: 30
+  power_reconfirm_seconds: 60
+  blocked_processes:
+    - csrss
+    - wininit
+    - winlogon
+    - services
+    - lsass
+    - smss
+    - svchost
+    - explorer
+    - dwm
+  extra_blocked_processes: []
+  blocked_paths:
+    - "C:\\Windows"
+    - "C:\\Program Files"
+    - "C:\\Program Files (x86)"
+    - "C:\\ProgramData"
+  extra_blocked_paths: []
+  audit_log: "logs/safety_audit.jsonl"
+
+kill_switch:
+  hotkey: "ctrl+shift+escape"
+  silence_tts_on_trip: true
+
+logging:
+  level: "INFO"
+  file: "logs/agent.log"
+  max_bytes_mb: 10
+  backup_count: 3

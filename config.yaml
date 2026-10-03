@@ -1,0 +1,63 @@
+browser:
+  default_browser: chrome
+  navigation_timeout_seconds: 20
+  verify_navigation: true
+  youtube_autoplay_delay_seconds: 2.0
+kill_switch:
+  hotkey: ctrl+shift+escape
+  silence_tts_on_trip: true
+limits:
+  command_timeout_seconds: 10
+  max_list_controls_entries: 100
+  ui_control_wait_timeout_seconds: 5
+  ui_max_retries: 2
+  ui_verify_delay_seconds: 0.4
+logging:
+  backup_count: 3
+  file: logs/agent.log
+  level: INFO
+  max_bytes_mb: 10
+model:
+  max_tokens: 1024
+  ollama_host: http://localhost:11434
+  ollama_model: qwen2.5:1.5b
+  request_timeout_seconds: 120
+  temperature: 0.1
+safety:
+  audit_log: logs/safety_audit.jsonl
+  blocked_processes:
+  - csrss
+  - wininit
+  - winlogon
+  - services
+  - lsass
+  - smss
+  - svchost
+  - explorer
+  - dwm
+  max_actions_per_minute: 30
+  power_reconfirm_seconds: 60
+  require_confirmation_for_dangerous_actions: true
+  require_confirmation_for_modifications: false
+voice:
+  beam_size: 5
+  block_size: 1600
+  device: null
+  duration_seconds: 4.0
+  language: en
+  max_audio_level: 0.95
+  max_record_seconds: 15.0
+  min_audio_level: 0.002
+  min_transcription_confidence: -0.75
+  mute_cooldown_seconds: 5.0
+  post_speech_silence: 1.5
+  pre_speech_buffer: 0.4
+  rate: 175
+  sample_rate: 16000
+  stt_device: auto
+  suppress_duplicates_seconds: 10
+  tts_enabled: true
+  vad_filter: true
+  voice_name: ''
+  volume: 1.0
+  whisper_model: small
